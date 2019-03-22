@@ -93,4 +93,19 @@ public class AuthorizationController {
         PageInfo pageInfo=sysMenuService.selectNoAuthoMenuToRole(pn,pageSize,roleId,menuName);
         return pageInfo;
     }
+
+    @RequestMapping("/batchMenuToRole")
+    @ResponseBody
+    public Message batchMenuToRole(@RequestParam List<Long> idList,Long roleId){
+        Message message=sysRoleService.batchMenuToRole(idList,roleId);
+        return message;
+    }
+
+    @RequestMapping("/deleteMenuToRole")
+    @ResponseBody
+    public Message deleteMenuToRole(Long menuId,Long roleId){
+        Message message=sysRoleService.deleteMenuToRole(menuId,roleId);
+        return message;
+    }
+
 }

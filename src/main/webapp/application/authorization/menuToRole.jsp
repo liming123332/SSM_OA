@@ -104,30 +104,28 @@
             }
         },
         methods:{
-            batchdel:function () {
+            batchMenuToRole:function () {
                 //alert(vue.check);
                if(vue.check.length==0) {
                    layer.msg('请选中以后再点击！!', {icon: 1, time: 1000})
                }else{
                    $.ajax({
                        type:"post",
-                       url:"sysMenu/batchDel?idList="+vue.check,
+                       url:"authorization/batchMenuToRole",
+                       data:"idList="+vue.check+"&roleId="+vue.sysMenuC.roleId,
                        success:function (result) {
                            if (result.msg == "成功") {
-                               vue.check.forEach(function (item,index) {
-                                   vue.pageInfo.list.forEach(function (sysMenu,i) {
-                                       if(sysMenu.menuId==item){
-                                           vue.pageInfo.list.splice(i,1);
-                                       }
-                                   });
-                               });
+                               alert("授权成功！");
                                vue.check=[];
-                               layer.msg('已删除!', {icon: 1, time: 1000}, function () {
-                                   //发送ajax再次查询
-                                   pagination(pn, pageSize,sysMenu,url);
-                               });
+                               var index = parent.layer.getFrameIndex(window.name);
+                               parent.$('.btn-refresh').click();
+                               parent.layer.close(index);
                            }else if(result.msg=="失败"){
-                               layer.msg('该组织为父组织不能删除！!', {icon: 1, time: 1000})
+                               alert("授权失败！");
+                               vue.check=[];
+                               var index = parent.layer.getFrameIndex(window.name);
+                               parent.$('.btn-refresh').click();
+                               parent.layer.close(index);
                            }
                        }
                    })

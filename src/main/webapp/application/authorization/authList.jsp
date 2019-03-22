@@ -106,7 +106,7 @@
             <th width="100">菜单类型</th>
             <th width="100">菜单描述</th>
             <th width="100">是否发布</th>
-          <%--  <th width="70">操作</th>--%>
+            <th width="70">操作</th>
         </tr>
 
         <tr class="text-c" v-for="(sysMenu,index) in pageInfo.list">
@@ -117,9 +117,10 @@
             <td>{{sysMenu.menuType}}</td>
             <td>{{sysMenu.menuDesc}}</td>
             <td>{{publish(sysMenu.isPublish)}}</td>
-           <%-- <td class="f-14"><a title="编辑" href="javascript:;" @click="toUpdate(sysMenu.menuId)" &lt;%&ndash;onclick="admin_role_edit('组织编辑','admin-role-add.html','1')"&ndash;%&gt; style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" @click="deleteSysMenu(sysMenu.menuId)" &lt;%&ndash;onclick="admin_role_del(this,'1')" &ndash;%&gt;class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>--%>
+            <td class="f-14">
+               <%-- <a title="编辑" href="javascript:;" @click="toUpdate(sysMenu.menuId)" &lt;%&ndash;onclick="admin_role_edit('组织编辑','admin-role-add.html','1')"&ndash;%&gt; style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>--%>
+                <a title="取消菜单授权" href="javascript:;" @click="deleteMenuToRole(sysMenu.menuId)" <%--onclick="admin_role_del(this,'1')" --%>class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
         </tr>
-
         </tbody>
     </table>
     <!--分页容器-->
@@ -279,6 +280,35 @@
                     alert("请选择菜单类型!");
                     return;
                 }
+            },
+            //解除菜单授权
+            deleteMenuToRole:function (menuId) {
+                layer.confirm('取消授权须谨慎，确认要取消吗？',function() {
+                    //console.log("del");
+                    $.ajax({
+                        type: "get",
+                        url: "authorization/deleteMenuToRole",
+                        data: {menuId:menuId,roleId:vue.roleId},
+                        async: false,
+                        success: function (result) {
+                            if (result.msg == "成功") {
+                                for (var i = 0; i < vue.pageInfo.list.length; i++) {
+                                    if (vue.pageInfo.list[i].menuId == menuId) {
+                                        vue.pageInfo.list.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                                layer.msg('已取消授权!', {icon: 1, time: 1000}, function () {
+                                    //发送ajax再次查询 调用select方法
+                                    this.$options.methods.select();
+                                });
+                            }else if(result.msg=="失败"){
+                                layer.msg('该菜单不能取消授权！!', {icon: 1, time: 1000})
+                            }
+
+                        }
+                    })
+                });
             }
         }
     });

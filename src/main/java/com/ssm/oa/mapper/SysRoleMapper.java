@@ -16,4 +16,8 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     int batchadd(@Param("idList") List<Long> idList,@Param("roleId") Long roleId);
 
     int deleteUserToRole(@Param("userId") Long userId,@Param("roleId") Long roleId);
+
+    int batchMenuToRole(@Param("idList") List<Long> idList,@Param("roleId") Long roleId);
+
+    int deleteMenuToRole(@Param("menuId") Long menuId, @Param("roleId") Long roleId);
 }

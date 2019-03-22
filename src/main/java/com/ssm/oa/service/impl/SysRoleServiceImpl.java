@@ -96,4 +96,28 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements ISys
         return message;
     }
 
+    @Override
+    public Message batchMenuToRole(List<Long> idList, Long roleId) {
+        Message message=new Message();
+        int count=sysRoleMapper.batchMenuToRole(idList,roleId);
+        if(count>0){
+            message.setMsg("成功");
+            return message;
+        }
+        message.setMsg("失败");
+        return message;
+    }
+
+    @Override
+    public Message deleteMenuToRole(Long menuId, Long roleId) {
+        Message message=new Message();
+        int count=sysRoleMapper.deleteMenuToRole(menuId,roleId);
+        if(count>0){
+            message.setMsg("成功");
+            return message;
+        }
+        message.setMsg("失败");
+        return message;
+    }
+
 }
