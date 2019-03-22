@@ -52,7 +52,14 @@
             </div>
         </div>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+        <a href="javascript:;" @click="addUserToRole(vue.roleId)" class="btn btn-primary radius">
+            <i class="Hui-iconfont">&#xe6e2;</i> 授权新用户</a>
+        <a href="javascript:;" @click="addMenuToRole(vue.roleId)" class="btn btn-primary radius">
+            <i class="Hui-iconfont">&#xe6e2;</i> 授权新菜单</a>
+        </span>
+    </div>
     <table class="table table-border table-bordered table-bg" v-if="authUser">
         <thead>
         <tr>
@@ -66,7 +73,7 @@
             <th width="100">邮件</th>
             <th width="100">出生日期</th>
             <th width="100">个人简介</th>
-            <%--<th width="70">操作</th>--%>
+            <th width="70">操作</th>
         </tr>
 
         <tr class="text-c" v-for="(sysUser,index) in pageInfo.list">
@@ -79,7 +86,9 @@
                 {{changeDate(sysUser.birthday)}}
             </td>
             <td>{{sysUser.introduce}}</td>
-           <%-- <td class="f-14"><a title="编辑" href="javascript:;" @click="toUpdate(sysUser.userId)" &lt;%&ndash;onclick="admin_role_edit('组织编辑','admin-role-add.html','1')"&ndash;%&gt; style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" @click="deleteSysUser(sysUser.userId)" &lt;%&ndash;onclick="admin_role_del(this,'1')" &ndash;%&gt;class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>--%>
+            <td class="f-14">
+               <%-- <a title="编辑" href="javascript:;" @click="toUpdate(sysUser.userId)" &lt;%&ndash;onclick="admin_role_edit('组织编辑','admin-role-add.html','1')"&ndash;%&gt; style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> --%>
+                   <a title="取消授权" href="javascript:;" @click="deleteUserToRole(sysUser.userId)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
         </tr>
 
         </tbody>
@@ -137,6 +146,7 @@
             pageInfo:{},
             check:[]
         },
+        //查询所有角色
         created:function () {
             $.ajax({
                 type:"post",
@@ -147,6 +157,7 @@
             })
         },
         methods:{
+            //根据条件查询 角色下的用户，角色下的菜单
             select:function () {
                 if(vue.roleId==-1){
                     alert("请选择角色!");
@@ -166,6 +177,7 @@
                     var url="authorization/selectUserByRoleId";
                     //调用分页ajax查询
                     pagination(pn,pageSize,object,url);
+                    vue.check=[];
                     vue.authUser=true;
                     vue.roleMenu=false;
                 }
@@ -179,6 +191,7 @@
                     var url="authorization/selectMenuByRoleId";
                     //调用分页ajax查询
                     pagination(pn,pageSize,object,url);
+                    vue.check=[];
                     vue.authUser=false;
                     vue.roleMenu=true;
 
@@ -201,6 +214,70 @@
                     return '否';
                 }else if(isPublish==1){
                     return '是';
+                }
+            },
+            //授权新用户
+            addUserToRole:function (roleId) {
+                if(vue.roleId==-1){
+                    alert("请选择角色！")
+                    return;
+                }
+                if(vue.type==-1){
+                    alert("请选择类型!");
+                    return;
+                }
+                if(vue.type==1) {
+                    var url = "authorization/addUserToRole?roleId=" + roleId;
+                    layer_show("授权新用户", url, 1000, 500);
+                }else{
+                    alert("请选择用户类型!");
+                }
+            },
+            //解除用户授权
+            deleteUserToRole: function (userId) {
+                layer.confirm('取消授权须谨慎，确认要取消吗？',function() {
+                    //console.log("del");
+                    $.ajax({
+                        type: "get",
+                        url: "authorization/deleteUserToRole",
+                        data: {userId:userId,roleId:vue.roleId},
+                        async: false,
+                        success: function (result) {
+                            if (result.msg == "成功") {
+                                for (var i = 0; i < vue.pageInfo.list.length; i++) {
+                                    if (vue.pageInfo.list[i].userId == userId) {
+                                        vue.pageInfo.list.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                                layer.msg('已取消授权!', {icon: 1, time: 1000}, function () {
+                                    //发送ajax再次查询 调用select方法
+                                    this.$options.methods.select();
+                                });
+                            }else if(result.msg=="失败"){
+                                layer.msg('该用户不能删除！!', {icon: 1, time: 1000})
+                            }
+
+                        }
+                    })
+                });
+            },
+            //授权新菜单
+            addMenuToRole:function (roleId) {
+                if(vue.roleId==-1){
+                    alert("请选择角色！")
+                    return;
+                }
+                if(vue.type==-1){
+                    alert("请选择类型!");
+                    return;
+                }
+                if(vue.type==2){
+                    var url = "authorization/addMenuToRole?roleId=" + roleId;
+                    layer_show("授权新菜单", url, 1000, 500);
+                }else{
+                    alert("请选择菜单类型!");
+                    return;
                 }
             }
         }

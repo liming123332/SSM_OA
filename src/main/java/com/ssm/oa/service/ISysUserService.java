@@ -16,4 +16,6 @@ public interface ISysUserService extends IBaseService<SysUser> {
     Message batchDel(List<Long> idList);
 
     PageInfo selectUserByRoleId(int pn, int pageSize, Long roleId);
+
+    PageInfo selectNoAuthoUserToRole(Integer pn, Integer pageSize, Long roleId, String userName);
 }

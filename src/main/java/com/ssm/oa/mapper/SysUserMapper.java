@@ -1,6 +1,7 @@
 package com.ssm.oa.mapper;
 
 import com.ssm.oa.entity.SysUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     int batchDel(List<Long> idList);
 
     List<SysUser> selectUserByRoleId(Long roleId);
+
+    List<SysUser> selectNoAuthoUserToRole(@Param("roleId") Long roleId,@Param("userName") String userName);
 }

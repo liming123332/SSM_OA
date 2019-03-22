@@ -47,6 +47,17 @@
     values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR}, 
       #{flag,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
+  <!--批量添加授权根据多个用户id，角色id-->
+  <insert id="batchadd">
+    insert into sys_role_user(user_id,role_id) values
+    <foreach collection="idList" item="userId" separator=",">
+      (#{userId},#{roleId})
+    </foreach>
+  </insert>
+  <!--取消授权根据用户id，角色id-->
+  <delete id="deleteUserToRole">
+    delete from sys_role_user where USER_ID=#{userId} and ROLE_ID=#{roleId}
+  </delete>
   <insert id="insertSelective" parameterType="com.ssm.oa.entity.SysRole">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">

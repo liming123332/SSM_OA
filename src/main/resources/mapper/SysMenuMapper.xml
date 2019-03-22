@@ -58,6 +58,14 @@
      select m.* from sys_menu m where m.IS_PUBLISH=1 and m.MENU_ID in
      (select rm.menu_id from sys_role_menu rm where rm.ROLE_ID=#{roleId})
   </select>
+  <!--根据roleid查询该角色下没有授权的菜单-->
+  <select id="selectNoAuthoMenuToRole" resultMap="BaseResultMap">
+     select m.* from sys_menu m where m.IS_PUBLISH=1 and m.MENU_ID not in
+     (select rm.menu_id from sys_role_menu rm where rm.ROLE_ID=#{roleId})
+     <if test="menuName!=null and menuName!=''">
+       AND MENU_NAME like concat('%',#{menuName},'%')
+     </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_menu
     where MENU_ID = #{menuId,jdbcType=BIGINT}

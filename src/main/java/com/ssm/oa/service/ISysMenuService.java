@@ -18,4 +18,6 @@ public interface ISysMenuService extends IBaseService<SysMenu>{
     Message batchDel(List<Long> idList);
 
     PageInfo selectMenuByRoleId(Integer pn, Integer pageSize, Long roleId);
+
+    PageInfo selectNoAuthoMenuToRole(Integer pn, Integer pageSize, Long roleId, String menuName);
 }

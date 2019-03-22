@@ -17,4 +17,7 @@ public interface ISysRoleService extends IBaseService<SysRole> {
 
     Message batchDel(List<Long> idList);
 
+    Message batchadd(List<Long> idList, Long roleId);
+
+    Message deleteUserToRole(Long userId, Long roleId);
 }
