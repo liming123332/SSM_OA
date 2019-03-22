@@ -47,4 +47,25 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements ISys
         message.setMsg("成功");
         return message;
     }
+
+    @Override
+    public Message batchDel(List<Long> idList) {
+        int count=sysMenuMapper.getMenuBatchChildrenCount(idList);
+        Message message=new Message();
+        if(count>0){
+            message.setMsg("失败");
+            return message;
+        }
+        sysMenuMapper.deleteBatchMenu(idList);
+        message.setMsg("成功");
+        return message;
+    }
+
+    @Override
+    public PageInfo selectMenuByRoleId(Integer pn, Integer pageSize, Long roleId) {
+        PageHelper.startPage(pn, pageSize);
+        List<SysMenu> sysMenuList =sysMenuMapper.selectMenuByRoleId(roleId);
+        PageInfo pageInfo=new PageInfo(sysMenuList);
+        return pageInfo;
+    }
 }

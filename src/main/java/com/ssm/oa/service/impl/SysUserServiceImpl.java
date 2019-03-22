@@ -52,4 +52,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements ISys
         message.setMsg("失败");
         return message;
     }
+
+    @Override
+    public PageInfo selectUserByRoleId(int pn, int pageSize, Long roleId) {
+        PageHelper.startPage(pn, pageSize);
+        List<SysUser> sysUserList =sysUserMapper.selectUserByRoleId(roleId);
+        PageInfo pageInfo=new PageInfo(sysUserList);
+        return pageInfo;
+    }
 }

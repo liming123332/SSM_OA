@@ -9,4 +9,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     List<SysRole> getSelectRoleList(SysRole sysRole);
 
     int batchDel(List<Long> idList);
+
+    List<SysRole> getRoleList();
 }

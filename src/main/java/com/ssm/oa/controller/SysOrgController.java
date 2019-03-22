@@ -14,11 +14,11 @@ import java.util.List;
 @RequestMapping("/sysOrg")
 public class SysOrgController {
     @Autowired
-    private ISysOrgService sysOrgServicel;
+    private ISysOrgService sysOrgService;
     @RequestMapping("/query")
     @ResponseBody
     public SysOrg querySysOrgById(@RequestParam Long id){
-       return  sysOrgServicel.selectByPrimaryKey(id);
+       return  sysOrgService.selectByPrimaryKey(id);
     }
     @RequestMapping("/orgInfo")
     public String orgList(){
@@ -28,14 +28,14 @@ public class SysOrgController {
     @RequestMapping(value = "/orgList",method = RequestMethod.GET)
     @ResponseBody
     public PageInfo getOrgList(@RequestParam  int pn,@RequestParam  int pageSize){
-        PageInfo<SysOrg> pageInfo=sysOrgServicel.getOrgList(pn,pageSize);
+        PageInfo<SysOrg> pageInfo=sysOrgService.getOrgList(pn,pageSize);
         return pageInfo;
     }
 
     @RequestMapping(value ="/deleteOrg",method = RequestMethod.GET)
     @ResponseBody
     public Message deleteSysOrg(@RequestParam  long id){
-        Message message=sysOrgServicel.deleteFlag(id);
+        Message message=sysOrgService.deleteFlag(id);
         return message;
     }
 
@@ -47,7 +47,7 @@ public class SysOrgController {
     @RequestMapping("/addOrg")
     @ResponseBody
     public Message addOrg(SysOrg sysOrg){
-        sysOrgServicel.insertSelective(sysOrg);
+        sysOrgService.insertSelective(sysOrg);
         Message message= new Message();
         message.setMsg("添加成功");
         return message;
@@ -56,7 +56,7 @@ public class SysOrgController {
     @RequestMapping("/updateOrg")
     @ResponseBody
     public Message updateOrg(SysOrg sysOrg){
-        sysOrgServicel.updateByPrimaryKeySelective(sysOrg);
+        sysOrgService.updateByPrimaryKeySelective(sysOrg);
         Message message= new Message();
         message.setMsg("修改成功");
         return message;
@@ -65,20 +65,20 @@ public class SysOrgController {
     @RequestMapping("/batchDel")
     @ResponseBody
     public Message batchDel(@RequestParam List<Long> idList){
-        Message message= sysOrgServicel.batchDel(idList);
+        Message message= sysOrgService.batchDel(idList);
         return message;
     }
 
     @RequestMapping("/list")
     @ResponseBody
     public List<SysOrg> getList(){
-        List<SysOrg> list=  sysOrgServicel.getList();
+        List<SysOrg> list=  sysOrgService.getList();
         return list;
     }
 
     @RequestMapping(value = "/toUpdate/{id}",method = RequestMethod.GET)
     public String toUpdate(@PathVariable Long id,Model model)  {
-        SysOrg sysOrg=sysOrgServicel.selectByPrimaryKey(id);
+        SysOrg sysOrg=sysOrgService.selectByPrimaryKey(id);
         model.addAttribute("sysOrg",sysOrg);
         return "org/org_update";
 
@@ -86,7 +86,8 @@ public class SysOrgController {
     @RequestMapping("/select")
     @ResponseBody
     public PageInfo getSelectOrgList(Integer pn,Integer pageSize,SysOrg sysOrg){
-        PageInfo<SysOrg> pageInfo=sysOrgServicel.getSelectOrgList(pn,pageSize,sysOrg);
+        PageInfo<SysOrg> pageInfo=sysOrgService.getSelectOrgList(pn,pageSize,sysOrg);
         return pageInfo;
     }
+
 }

@@ -11,7 +11,10 @@ public interface ISysRoleService extends IBaseService<SysRole> {
 
     PageInfo<SysRole> getSelectRoleList(Integer pn, Integer pageSize, SysRole sysRole);
 
+    List<SysRole> getRoleList();
+
     Message deleteRole(Long id);
 
     Message batchDel(List<Long> idList);
+
 }

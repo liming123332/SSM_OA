@@ -11,4 +11,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     int deleteUser(Long id);
 
     int batchDel(List<Long> idList);
+
+    List<SysUser> selectUserByRoleId(Long roleId);
 }

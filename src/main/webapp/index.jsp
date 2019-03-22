@@ -61,6 +61,7 @@
                 <ul>
                     <li><a _href="sysRole/roleInfo" href="javascript:void(0)">角色管理</a></li>
                     <li><a _href="sysMenu/menuInfo" href="javascript:void(0)">菜单管理</a></li>
+                    <li><a _href="authorization/authInfo" href="javascript:void(0)">授权管理</a></li>
                 </ul>
             </dd>
         </dl>

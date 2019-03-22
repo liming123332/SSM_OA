@@ -2,8 +2,10 @@ package com.ssm.oa.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ssm.oa.entity.SysMenu;
 import com.ssm.oa.entity.SysRole;
 import com.ssm.oa.mapper.BaseMapper;
+import com.ssm.oa.mapper.SysMenuMapper;
 import com.ssm.oa.mapper.SysRoleMapper;
 import com.ssm.oa.service.ISysRoleService;
 import com.ssm.oa.utils.Message;
@@ -28,6 +30,11 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements ISys
         List<SysRole> sysRoleList= sysRoleMapper.getSelectRoleList(sysRole);
         PageInfo pageInfo=new PageInfo(sysRoleList);
         return pageInfo;
+    }
+
+    @Override
+    public List<SysRole> getRoleList() {
+        return sysRoleMapper.getRoleList();
     }
 
     @Override
@@ -64,4 +71,5 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements ISys
         message.setMsg("成功");
         return message;
     }
+
 }

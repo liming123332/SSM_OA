@@ -14,4 +14,8 @@ public interface ISysMenuService extends IBaseService<SysMenu>{
     List<SysMenu> getSysMenuList();
 
     Message deleteMenu(Long id);
+
+    Message batchDel(List<Long> idList);
+
+    PageInfo selectMenuByRoleId(Integer pn, Integer pageSize, Long roleId);
 }

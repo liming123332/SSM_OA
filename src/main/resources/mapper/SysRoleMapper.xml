@@ -17,6 +17,12 @@
     from sys_role
     where ROLE_ID = #{roleId,jdbcType=BIGINT}
   </select>
+  <select id="getRoleList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_role
+    where FLAG=1
+  </select>
   <!--搜索RoleName有关的角色-->
   <select id="getSelectRoleList" parameterType="com.ssm.oa.entity.SysRole" resultMap="BaseResultMap">
     select

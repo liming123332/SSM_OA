@@ -34,6 +34,12 @@
     from sys_user
     where USER_ID = #{userId,jdbcType=BIGINT}
   </select>
+
+  <select id="selectUserByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select u.* from sys_user u where u.flag=1 and u.USER_ID in
+    (select rs.USER_ID from sys_role_user rs where rs.ROLE_ID=#{roleId})
+  </select>
+
   <!--根据用户名条件搜索-->
   <select id="getSelectUserList" parameterType="com.ssm.oa.entity.SysUser" resultMap="BaseResultMap">
     select

@@ -45,6 +45,19 @@
       count(*)
     from sys_menu where MENU_PARENT_ID=#{menuId}
   </select>
+  <select id="getMenuBatchChildrenCount" parameterType="Long" resultType="int">
+    select
+      count(*)
+    from sys_menu where MENU_PARENT_ID in
+    <foreach collection="list" item="menuId" open="(" close=")" separator=",">
+      #{menuId}
+    </foreach>
+  </select>
+  <!--根据roleId查询菜单-->
+  <select id="selectMenuByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+     select m.* from sys_menu m where m.IS_PUBLISH=1 and m.MENU_ID in
+     (select rm.menu_id from sys_role_menu rm where rm.ROLE_ID=#{roleId})
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_menu
     where MENU_ID = #{menuId,jdbcType=BIGINT}
@@ -162,10 +175,19 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where MENU_ID = #{menuId,jdbcType=BIGINT}
   </update>
-  <update id="deleteMenu" parameterType="com.ssm.oa.entity.SysMenu">
+  <update id="deleteMenu" parameterType="Long">
     update sys_menu
     set
       IS_PUBLISH=0
     where MENU_ID = #{menuId,jdbcType=BIGINT}
+  </update>
+  <update id="deleteBatchMenu" parameterType="Long">
+    update sys_menu
+    set
+      IS_PUBLISH=0
+    where MENU_ID in
+    <foreach collection="list" item="menuId" open="(" close=")" separator=",">
+      #{menuId}
+    </foreach>
   </update>
 </mapper>

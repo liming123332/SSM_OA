@@ -60,4 +60,11 @@ public class SysMenuController  {
         Message message=sysMenuService.deleteMenu(id);
         return message;
     }
+
+    @RequestMapping("/batchDel")
+    @ResponseBody
+    public Message batchDel(@RequestParam List<Long> idList){
+        Message message=sysMenuService.batchDel(idList);
+        return message;
+    }
 }

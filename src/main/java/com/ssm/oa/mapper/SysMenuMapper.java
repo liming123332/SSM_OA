@@ -13,4 +13,10 @@ public interface SysMenuMapper extends BaseMapper<SysMenu>{
     int getMenuChildrenCount(Long id);
 
     int deleteMenu(Long id);
+
+    int getMenuBatchChildrenCount(List<Long> idList);
+
+    int deleteBatchMenu(List<Long> idList);
+
+    List<SysMenu> selectMenuByRoleId(Long roleId);
 }
