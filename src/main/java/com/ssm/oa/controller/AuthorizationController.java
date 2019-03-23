@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -90,7 +91,7 @@ public class AuthorizationController {
     @RequestMapping("/selectNoAuthoMenuToRole")
     @ResponseBody
     public PageInfo selectNoAuthoMenuToRole(Integer pn,Integer pageSize,Long roleId,String menuName){
-        PageInfo pageInfo=sysMenuService.selectNoAuthoMenuToRole(pn,pageSize,roleId,menuName);
+        PageInfo pageInfo = sysMenuService.selectNoAuthoMenuToRole(pn, pageSize, roleId, menuName);
         return pageInfo;
     }
 

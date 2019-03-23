@@ -6,6 +6,8 @@ import com.ssm.oa.service.ISysMenuService;
 import com.ssm.oa.utils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,6 +67,26 @@ public class SysMenuController  {
     @ResponseBody
     public Message batchDel(@RequestParam List<Long> idList){
         Message message=sysMenuService.batchDel(idList);
+        return message;
+    }
+
+    @RequestMapping("/toUpdate/{id}")
+    public String toUpdate(@PathVariable Long id, Model model){
+        SysMenu sysMenu = sysMenuService.selectByPrimaryKey(id);
+        model.addAttribute("sysMenu",sysMenu);
+        return "/menu/menu_update";
+    }
+
+    @RequestMapping("/updateMenu")
+    @ResponseBody
+    public Message updateMenu(SysMenu sysMenu){
+        int count = sysMenuService.updateByPrimaryKeySelective(sysMenu);
+        Message message=new Message();
+        if(count>0){
+            message.setMsg("修改成功");
+            return message;
+        }
+        message.setMsg("修改失败");
         return message;
     }
 }
