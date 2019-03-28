@@ -127,14 +127,32 @@
                 content:'',
             }
         },
-        methods:{
-            jump:function () {
-               // alert(vue.sysPurchase.title)
+        methods: {
+            jump: function () {
+                // alert(vue.sysPurchase.title)
                 var pn = 1;
                 var pageSize = 3;
-                var totalCount = 0;
-                var url="purchase/add";
-                pagination(pn,pageSize,vue.sysPurchase,url)
+                var url = "purchase/add";
+                vue.sysPurchase.pn = pn;
+                vue.sysPurchase.pageSize = pageSize;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: vue.sysPurchase,/*roleName:sysRole.roleName,flag:sysRole.flag*/
+                    dataType: "json",
+                    async: true,//这里设置为同步执行，目的是等数据加载完再调用layui分页组件，不然分页组件拿不到totalCount的值
+                    success: function (result) {
+                        //alert(result.list[0].roleName)
+                        for (var i = 0; i < result.list.length; i++) {
+                            if (result.list[i].createTime != null) {
+                                result.list[i].createTime = changeDate(result.list[i].createTime);
+                            }
+                            if (result.list[i].updateTime != null) {
+                                result.list[i].updateTime = changeDate(result.list[i].updateTime);
+                            }
+                        }
+                    },
+                })
             }
         }
     })
