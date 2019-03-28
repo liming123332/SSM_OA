@@ -2,6 +2,7 @@ package com.ssm.oa.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ssm.oa.entity.SysMenu;
 import com.ssm.oa.entity.SysUser;
 import com.ssm.oa.mapper.BaseMapper;
 import com.ssm.oa.mapper.SysUserMapper;
@@ -67,6 +68,22 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements ISys
         List<SysUser> sysUserList =sysUserMapper.selectNoAuthoUserToRole(roleId,userName);
         PageInfo pageInfo=new PageInfo(sysUserList);
         return pageInfo;
+    }
+
+    @Override
+    public SysUser checkLogin(SysUser sysUser) {
+        SysUser currentUser=sysUserMapper.checkLogin(sysUser);
+        return currentUser;
+    }
+
+    @Override
+    public List<SysMenu> getMenu(Long userId) {
+        return sysUserMapper.getMenu(userId);
+    }
+
+    @Override
+    public SysUser getUserByName(String username) {
+        return sysUserMapper.getUserByName(username);
     }
 
 }

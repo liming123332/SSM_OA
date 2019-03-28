@@ -63,7 +63,32 @@
     </where>
   </select>
 
+  <!--判断登陆条件-->
+  <select id="checkLogin" parameterType="com.ssm.oa.entity.SysUser" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from sys_user
+    where USER_NAME=#{userName} and USER_PASSWORD=#{userPassword} and flag=1
+  </select>
 
+  <!--根据用户名去找到用户-->
+  <select id="getUserByName" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from sys_user
+    where USER_NAME=#{userName} and flag=1
+  </select>
+
+  <!--根据userId查询Menu-->
+  <select id="getMenu" parameterType="Long" resultMap="com.ssm.oa.mapper.SysMenuMapper.BaseResultMap">
+    select distinct m.* from
+      sys_menu m,
+      sys_user u,
+      sys_role_user rs,
+      sys_role_menu rm
+      where
+      u.USER_ID=#{userId}
+      and u.USER_ID=rs.USER_ID
+      and rs.ROLE_ID=rm.ROLE_ID
+      and rm.MENU_ID=m.MENU_ID
+      and m.MENU_PARENT_ID!=-1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_user
     where USER_ID = #{userId,jdbcType=BIGINT}

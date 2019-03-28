@@ -1,9 +1,15 @@
 package com.ssm.oa.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.ssm.oa.entity.SysMenu;
 import com.ssm.oa.entity.SysUser;
 import com.ssm.oa.service.ISysUserService;
 import com.ssm.oa.utils.Message;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -78,5 +84,37 @@ public class SysUserController {
        message.setMsg("修改失败");
        return message;
     }
+
+    @RequestMapping("/checkLogin")
+    public String checkLogin(SysUser sysUser,Model model){
+        /*SysUser currentUser=sysUserService.checkLogin(sysUser);
+        if(currentUser!=null){
+            List<SysMenu> list=sysUserService.getMenu(currentUser.getUserId());
+            model.addAttribute("sysMenuList",list);
+            return "index";
+        }
+            return "login";*/
+        Subject subject = SecurityUtils.getSubject();
+        if(!subject.isAuthenticated()){
+            UsernamePasswordToken token=new UsernamePasswordToken(sysUser.getUserName(), sysUser.getUserPassword());
+            try {
+                subject.login(token);
+            }catch (AuthenticationException e){
+                System.out.println("验证失败");
+                return "login";
+            }
+        }
+        SysUser currentUser = (SysUser) subject.getPrincipal();
+        List<SysMenu> list=sysUserService.getMenu(currentUser.getUserId());
+        model.addAttribute("sysMenuList",list);
+        return "index";
+
+    }
+
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
+
 
 }

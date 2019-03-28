@@ -2,6 +2,7 @@ package com.ssm.oa.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.ssm.oa.entity.SysMenu;
+import com.ssm.oa.entity.SysUser;
 import com.ssm.oa.service.ISysMenuService;
 import com.ssm.oa.utils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,4 +90,6 @@ public class SysMenuController  {
         message.setMsg("修改失败");
         return message;
     }
+
+
 }

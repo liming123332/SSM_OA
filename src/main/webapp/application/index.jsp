@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <base href="<%=request.getContextPath()+"/"%>">
-<link href="static/css/H-ui.min.css" rel="stylesheet" type="text/css" />
-<link href="static/css/H-ui.admin.css" rel="stylesheet" type="text/css"/>
-<link href="static/skin/default/skin.css" rel="stylesheet" type="text/css"/>
-<link href="static/lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
-<link href="static/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/H-ui.admin.css" rel="stylesheet" type="text/css"/>
+<link href="../static/skin/default/skin.css" rel="stylesheet" type="text/css"/>
+<link href="../static/lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" />
 <body>
 <header class="Hui-header cl"> <a class="Hui-logo l" title="H-ui.admin v2.3" href="/">H-ui.admin</a> <a class="Hui-logo-m l" href="/" title="H-ui.admin">H-ui</a> <span class="Hui-subtitle l">V2.3</span>
     <nav class="mainnav cl" id="Hui-nav">
@@ -27,7 +27,7 @@
             <ul class="dropDown-menu radius box-shadow">
                 <li><a href="#">个人信息</a></li>
                 <li><a href="#">切换账户</a></li>
-                <li><a href="#">退出</a></li>
+                <li><a href="sysUser/logout">退出</a></li>
             </ul>
         </li>
         <li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -46,7 +46,7 @@
 <aside class="Hui-aside">
     <input runat="server" id="divScrollValue" type="hidden" value="" />
     <div class="menu_dropdown bk_2">
-        <dl id="menu-admin">
+   <%--     <dl id="menu-admin">
             <dt><i class="Hui-iconfont">&#xe62d;</i> 基础数据管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
@@ -54,8 +54,25 @@
                     <li><a _href="sysUser/userInfo" href="javascript:void(0)">用户管理</a></li>
                 </ul>
             </dd>
-        </dl>
-        <dl id="menu-system">
+        </dl>--%>
+        <c:forEach items="${sysMenuList}" var="menuParent">
+            <c:if test=""></c:if>
+           <dl id="menu-admin">
+               <c:if test="${menuParent.menuType==1}">
+               <dt><i class="Hui-iconfont">&#xe62d;</i> ${menuParent.menuName}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+               </c:if>
+               <dd>
+                   <ul>
+                       <c:forEach items="${sysMenuList}" var="menu">
+                       <c:if test="${menu.menuType==2&&menu.menuParentId==menuParent.menuId}">
+                           <li><a _href="${menu.menuPath}" href="javascript:void(0)">${menu.menuName}</a></li>
+                       </c:if>
+                       </c:forEach>
+                   </ul>
+               </dd>
+           </dl>
+        </c:forEach>
+        <%--<dl id="menu-system">
             <dt><i class="Hui-iconfont">&#xe62e;</i> 授权管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
@@ -64,7 +81,7 @@
                     <li><a _href="authorization/authInfo" href="javascript:void(0)">授权管理</a></li>
                 </ul>
             </dd>
-        </dl>
+        </dl>--%>
     </div>
 </aside>
 <div class="dislpayArrow"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
@@ -84,10 +101,10 @@
         </div>
     </div>
 </section>
-<script type="text/javascript" src="static/lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="static/lib/layer/layer.js"></script>
-<script type="text/javascript" src="static/js/H-ui.js"></script>
-<script type="text/javascript" src="static/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="../static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../static/lib/layer/layer.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.js"></script>
+<script type="text/javascript" src="../static/js/H-ui.admin.js"></script>
 <script type="text/javascript">
     /*资讯-添加*/
     function article_add(title,url){

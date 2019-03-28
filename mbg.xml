@@ -42,10 +42,10 @@
         </javaClientGenerator>
 
         <!--用于指定每个表的生成策略-->
-        <table tableName="sys_org" domainObjectName="SysOrg"
+        <table tableName="sys_purchase" domainObjectName="SysPurchase"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="sys_area" domainObjectName="SysArea"
+      <!--  <table tableName="sys_area" domainObjectName="SysArea"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <table tableName="sys_menu" domainObjectName="SysMenu"
@@ -56,6 +56,6 @@
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <table tableName="sys_user" domainObjectName="SysUser"
                enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
     </context>
 </generatorConfiguration>
