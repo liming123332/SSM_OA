@@ -47,39 +47,39 @@
             </div>
     </div>
     <div  class="pd-20">
-        <div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a href="javascript:;" @click="batchdel()" <%--onclick="datadel()"--%> class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" href="javascript:;" onclick="admin_role_add('添加组织','sysOrg/toAdd','800')"><i class="Hui-iconfont">&#xe600;</i> 添加组织</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-        <table class="table table-border table-bordered table-hover table-bg">
-            <thead>
-            <tr>
-                <th scope="col" colspan="7">组织管理</th>
-            </tr>
-            <tr class="text-c">
-                <th width="25"><input type="checkbox" value="" name=""></th>
-                <th width="40">组织ID</th>
-                <th width="100">组织名称</th>
-                <th width="100">父组织名称</th>
-                <th width="100">创建时间</th>
-                <th width="200">描述</th>
-                <th width="70">操作</th>
-            </tr>
-            </thead>
-            <tbody>
+    <div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a href="javascript:;" @click="batchdel()" <%--onclick="datadel()"--%> class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" href="javascript:;" onclick="admin_role_add('添加组织','sysOrg/toAdd','800')"><i class="Hui-iconfont">&#xe600;</i> 添加组织</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+    <table class="table table-border table-bordered table-hover table-bg">
+        <thead>
+        <tr>
+            <th scope="col" colspan="7">组织管理</th>
+        </tr>
+        <tr class="text-c">
+            <th width="25"><input type="checkbox" value="" name=""></th>
+            <th width="40">组织ID</th>
+            <th width="100">组织名称</th>
+            <th width="100">父组织名称</th>
+            <th width="100">创建时间</th>
+            <th width="200">描述</th>
+            <th width="70">操作</th>
+        </tr>
+        </thead>
+        <tbody>
 
-            <tr class="text-c" v-for="(sysOrg,index) in pageInfo.list">
-                <td><input type="checkbox" v-bind:value="sysOrg.orgId" v-model="check" name=""></td>
-                <td>{{sysOrg.orgId}}</td>
-                <td>{{sysOrg.orgName}}</td>
-                <td>{{sysOrg.orgParentName}}</td>
-                <td>
-                    {{sysOrg.createTime}}
-                </td>
-                <td>{{sysOrg.orgDesc}}</td>
-                <td class="f-14"><a title="编辑" href="javascript:;" @click="toUpdate(sysOrg.orgId)" <%--onclick="admin_role_edit('组织编辑','admin-role-add.html','1')"--%> style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" @click="deleteSysOrg(sysOrg.orgId)" <%--onclick="admin_role_del(this,'1')" --%>class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-            </tr>
+        <tr class="text-c" v-for="(sysOrg,index) in pageInfo.list">
+            <td><input type="checkbox" v-bind:value="sysOrg.orgId" v-model="check" name=""></td>
+            <td>{{sysOrg.orgId}}</td>
+            <td>{{sysOrg.orgName}}</td>
+            <td>{{sysOrg.orgParentName}}</td>
+            <td>
+                {{sysOrg.createTime}}
+            </td>
+            <td>{{sysOrg.orgDesc}}</td>
+            <td class="f-14"><a title="编辑" href="javascript:;" @click="toUpdate(sysOrg.orgId)" <%--onclick="admin_role_edit('组织编辑','admin-role-add.html','1')"--%> style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" @click="deleteSysOrg(sysOrg.orgId)" <%--onclick="admin_role_del(this,'1')" --%>class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+        </tr>
 
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+</div>
 </div>
 <!--分页容器-->
 <div id="list"></div>
