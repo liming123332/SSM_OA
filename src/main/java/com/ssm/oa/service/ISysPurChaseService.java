@@ -7,4 +7,8 @@ public interface ISysPurChaseService extends IBaseService<SysPurchase> {
     PageInfo<SysPurchase> getPurchaseList(Integer pn, Integer pageSize);
 
     void addAndStart(SysPurchase sysPurchase);
+
+    SysPurchase getPurchaseByTaskId(Long taskId);
+
+    void updateByPrimaryKeySelectiveAndReShenPi(SysPurchase sysPurchase, Long taskId);
 }

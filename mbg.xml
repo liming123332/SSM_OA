@@ -42,7 +42,7 @@
         </javaClientGenerator>
 
         <!--用于指定每个表的生成策略-->
-        <table tableName="sys_purchase" domainObjectName="SysPurchase"
+        <table tableName="sys_audit" domainObjectName="SysAudit"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
       <!--  <table tableName="sys_area" domainObjectName="SysArea"
